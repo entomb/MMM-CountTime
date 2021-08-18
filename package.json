@@ -1,8 +1,8 @@
 {
-  "name": "MMM-CountDown",
+  "name": "MMM-CountTime",
   "version": "1.0.0",
   "description": "Count down to a specific event",
-  "main": "MMM-CountDown.js",
+  "main": "MMM-CountTime.js",
   "author": "Boaz Arad",
   "license": "MIT",
   "devDependencies": {
