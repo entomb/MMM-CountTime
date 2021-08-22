@@ -5,13 +5,13 @@ Module.register("MMM-CountTime", {
     date: "2020-01-01 09:38:00",
     customInterval: 1000,
     display: 'YMwdhms',
-    yearsLabel: 'y',
-    monthsLabel: 'm',
-    weeksLabel: 'w',
-    daysLabel: 'd',
-    hoursLabel: 'h',
-    minutesLabel: 'min',
-    secondsLabel: 's',
+    yearsLabel: 'Years',
+    monthsLabel: 'Months',
+    weeksLabel: 'Weeks',
+    daysLabel: 'Days',
+    hoursLabel: 'Hours',
+    minutesLabel: 'Min',
+    secondsLabel: 'Secs',
   },
 
   // set update interval
@@ -28,8 +28,13 @@ Module.register("MMM-CountTime", {
     wrapper.className = "interval"
 
     var timeWrapper = document.createElement("div");
-    timeWrapper.className = "time bright xlarge light";
-    timeWrapper.innerHTML = '' + num + this.config[`${interval}Label`];
+    timeWrapper.className = "time bright light";
+    timeWrapper.innerHTML = '' + num;
+
+    const label = document.createElement("span");
+    label.className = "small dimmed"
+    label.innerHTML = this.config[`${interval}Label`]
+    timeWrapper.appendChild(label);
 
     wrapper.appendChild(timeWrapper);
 
@@ -52,7 +57,17 @@ Module.register("MMM-CountTime", {
   },
 
   getTimeInterval(timeDiff, letter) {
-    return 123
+    switch (letter) {
+      case 'Y': return Math.floor(timeDiff / 60 / 60 / 24 / 365)
+      case 'M': return Math.floor(timeDiff / 60 / 60 / 24 / 30)
+      case 'w': return Math.floor(timeDiff / 60 / 60 / 24 / 7)
+      case 'd': return Math.floor(timeDiff / 60 / 60 / 24)
+      case 'h': return Math.floor(timeDiff / 60 / 60)
+      case 'm': return Math.floor(timeDiff / 60)
+
+      default:
+      case 's': return timeDiff
+    }
   },
 
   // Update function
