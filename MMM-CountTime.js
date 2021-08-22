@@ -4,6 +4,7 @@ Module.register("MMM-CountTime", {
     event: "Your Birthday:",
     date: "2020-01-01 09:38:00",
     customInterval: 1000,
+    onlyAboveZero: false,
     display: 'YMwdhms',
     yearsLabel: 'Years',
     monthsLabel: 'Months',
@@ -86,6 +87,10 @@ Module.register("MMM-CountTime", {
     this.config.display.split("").forEach(displayLetter => {
       const interval = this.getIntervalFromDisplay(displayLetter)
       const timeInterval = this.getTimeInterval(Math.floor(timeDiff / 1000), displayLetter)
+
+      if (this.config.onlyAboveZero && timeInterval < 1) {
+        return;
+      }
 
       const block = this.getBlock(interval, timeInterval)
       wrapper.appendChild(block)
