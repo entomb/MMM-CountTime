@@ -10,7 +10,7 @@ Module.register("MMM-CountTime", {
     weeksLabel: 'w',
     daysLabel: 'd',
     hoursLabel: 'h',
-    minutesLabel: 'm',
+    minutesLabel: 'min',
     secondsLabel: 's',
   },
 
@@ -22,34 +22,59 @@ Module.register("MMM-CountTime", {
     }, this.config.customInterval);
   },
 
+
+  getBlock(interval, num) {
+    var wrapper = document.createElement("div");
+    wrapper.className = "interval"
+
+    var timeWrapper = document.createElement("div");
+    timeWrapper.className = "time bright xlarge light";
+    timeWrapper.innerHTML = '' + num + this.config[`${interval}Label`];
+
+    wrapper.appendChild(timeWrapper);
+
+    return wrapper
+  },
+
+
+  getIntervalFromDisplay(letter) {
+    switch (letter) {
+      case 'Y': return 'years'
+      case 'M': return 'months'
+      case 'w': return 'weeks'
+      case 'd': return 'days'
+      case 'h': return 'hours'
+      case 'm': return 'minutes'
+
+      default:
+      case 's': return 'seconds'
+    }
+  },
+
+  getTimeInterval(timeDiff, letter) {
+    return 123
+  },
+
   // Update function
   getDom: function () {
     var wrapper = document.createElement("div");
 
-    var timeWrapper = document.createElement("div");
     var textWrapper = document.createElement("div");
-
     textWrapper.className = "align-left week dimmed medium";
-    timeWrapper.className = "time bright xlarge light";
     textWrapper.innerHTML = this.config.event;
-
-    var today = new Date(Date.now());
-    var target = new Date(this.config.date);
-    var timeDiff = target - today;
-
-    // Set days, hours, minutes and seconds
-    var diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-
-    // Build the output
-    var hrs = '';
-    var mins = '';
-    var secs = '';
-    var days = diffDays + this.config.daysLabel;
-
-    timeWrapper.innerHTML = days + hrs + mins + secs;
-
     wrapper.appendChild(textWrapper);
-    wrapper.appendChild(timeWrapper);
+
+    var timeNow = new Date(Date.now());
+    var timeTarget = new Date(this.config.date);
+    var timeDiff = timeNow - timeTarget;
+
+    this.config.display.split("").forEach(displayLetter => {
+      const interval = this.getIntervalFromDisplay(displayLetter)
+      const timeInterval = this.getTimeInterval(timeDiff, displayLetter)
+
+      const block = this.getBlock(interval, timeInterval)
+      wrapper.appendChild(block)
+    });
 
     return wrapper;
   }
