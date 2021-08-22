@@ -85,7 +85,7 @@ Module.register("MMM-CountTime", {
 
     this.config.display.split("").forEach(displayLetter => {
       const interval = this.getIntervalFromDisplay(displayLetter)
-      const timeInterval = this.getTimeInterval(timeDiff, displayLetter)
+      const timeInterval = this.getTimeInterval(Math.floor(timeDiff / 1000), displayLetter)
 
       const block = this.getBlock(interval, timeInterval)
       wrapper.appendChild(block)
