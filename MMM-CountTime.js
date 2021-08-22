@@ -11,7 +11,7 @@ Module.register("MMM-CountTime", {
     weeksLabel: 'Weeks',
     daysLabel: 'Days',
     hoursLabel: 'Hours',
-    minutesLabel: 'Min',
+    minutesLabel: 'Minutes',
     secondsLabel: 'Secs',
   },
 
@@ -32,9 +32,10 @@ Module.register("MMM-CountTime", {
     timeWrapper.className = "time bright light";
     timeWrapper.innerHTML = '' + num;
 
+    const labelText = this.config[`${interval}Label`]
     const label = document.createElement("span");
     label.className = "small dimmed"
-    label.innerHTML = this.config[`${interval}Label`]
+    label.innerHTML = num > 1 ? labelText : labelText.slice(0, -1)
     timeWrapper.appendChild(label);
 
     wrapper.appendChild(timeWrapper);
